@@ -9,6 +9,8 @@ import "./AuthForm.css";
 function Login() {
   const { user, login } = useAuth();
   const [loading, setLoading] = React.useState(false);
+  const [emailError, setEmailError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(false);
   const [values, setValues] = React.useState({
     email: "",
     password: "",
@@ -17,9 +19,11 @@ function Login() {
   const handleClick = () => {
     setLoading(true);
     if (values.email == "") {
-      alert("Enter your email");
+      setEmailError(true);
+      setLoading(false);
     } else if (values.password == "") {
-      alert("Enter your new password");
+      setPasswordError(true);
+      setLoading(false);
     } else {
       fire
         .auth()
@@ -37,7 +41,7 @@ function Login() {
                 query.forEach((doc) => {
                   login({
                     userId: doc.data().userId,
-                    authToken: doc.data().token,
+                    authToken: doc.data().authToken,
                   });
                   setLoading(false);
                 });
@@ -65,7 +69,12 @@ function Login() {
               })
             }
             type="email"
-            placeholder="Enter your registered email address"
+            placeholder={
+              emailError
+                ? "Please fill this field"
+                : "Enter your registered email address"
+            }
+            style={emailError ? { borderBottom: "1px solid red" } : null}
           />
         </div>
         <div className="form-col">
@@ -79,7 +88,12 @@ function Login() {
               })
             }
             type="password"
-            placeholder="Enter password"
+            placeholder={
+              passwordError
+                ? "Please fill this field"
+                : "Enter your registered email address"
+            }
+            style={passwordError ? { borderBottom: "1px solid red" } : null}
           />
         </div>
         <div className="form-col">

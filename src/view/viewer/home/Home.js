@@ -1,4 +1,7 @@
 import React from "react";
+import Footer from "../../../components/home/Footer";
+import NavBar from "../../../components/home/NavBar";
+import TodoList from "../../../components/home/TodoList";
 import { useAuth } from "../../../hooks/useAuth";
 
 function Home() {
@@ -6,8 +9,9 @@ function Home() {
 
   return (
     <div>
-      <h1>Home</h1>
-      <button onClick={logout}>logout</button>
+      <NavBar />
+      <TodoList />
+      <Footer />
     </div>
   );
 }
